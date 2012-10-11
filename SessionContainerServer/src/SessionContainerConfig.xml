@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Server>
+<port>9091</port>
+<connectionTimeout>80</connectionTimeout>
+<commandQueueCapcity>100</commandQueueCapcity>
+</Server>
