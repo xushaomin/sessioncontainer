@@ -14,6 +14,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.sessioncontainer.client.ClientConfig;
 import org.sessioncontainer.client.Utils;
 import org.sessioncontainer.client.service.SessionService;
@@ -22,6 +23,7 @@ import org.sessioncontainer.client.service.SessionService;
  * Servlet Filter implementation class SessionFilter
  */
 public class HttpSessionFilter implements Filter {
+	private final static Logger logger=Logger.getLogger(HttpSessionFilter.class);
 	private final SessionService sessionService = SessionService.getInstance();
 	/*private String sessionHolderKey = "SESSIONHOLDERKEY";
 	private String authorizedKey = "SIMPLEAUTHORIZEDKEY";
@@ -49,8 +51,9 @@ public class HttpSessionFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest request = (HttpServletRequest) servletRequest;
+		HttpServletRequest request = (HttpServletRequest)servletRequest;
 		String sessionContainerId = sessionService.getSessionContainerId(request.getSession().getId());
+		logger.debug("拦截请求：sessionContainerId["+sessionContainerId+"]--sessionId["+request.getSession().getId()+"]");
 		chain.doFilter(new HttpRequestWrapper(sessionContainerId, request),servletResponse);
 		/*String sessionHolderId = getSessionHolderId(request, response);
 		//一个新的会话，则新建sessionid并存储

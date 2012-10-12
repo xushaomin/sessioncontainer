@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSessionBindingListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+import org.apache.log4j.Logger;
 import org.sessioncontainer.client.ClientConfig;
 import org.sessioncontainer.client.Utils;
 import org.sessioncontainer.client.service.SessionService;
@@ -16,7 +17,7 @@ import org.sessioncontainer.client.service.SessionService;
  *
  */
 public class SessionListener implements HttpSessionListener {
-	
+	private final static Logger logger=Logger.getLogger(SessionListener.class);
 	private final SessionService sessionService = SessionService.getInstance();
     /**
      * Default constructor. 
@@ -25,9 +26,11 @@ public class SessionListener implements HttpSessionListener {
     }
 	@Override
 	public void sessionCreated(HttpSessionEvent event) {
+		
 		String sessionContainerId = Utils.getUUIDInUpperCase();
 		String sessionId = event.getSession().getId();
 		sessionService.regeditSessionId(sessionId, sessionContainerId);
+		logger.debug("session创建：sessionContainerId["+sessionContainerId+"]--sessionId["+sessionId+"]");
 	}
 	@Override
 	public void sessionDestroyed(HttpSessionEvent event) {
@@ -35,6 +38,7 @@ public class SessionListener implements HttpSessionListener {
 		String sessionContainerId = sessionService.getSessionContainerId(sessionId);
 		sessionService.delSession(sessionContainerId);//从存储服务器上移除数据
 		sessionService.rmvSessionId(sessionId);
+		logger.debug("session创建：sessionContainerId["+sessionContainerId+"]--sessionId["+sessionId+"]");
 	}
 
 	

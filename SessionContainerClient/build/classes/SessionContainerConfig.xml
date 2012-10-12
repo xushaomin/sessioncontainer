@@ -11,8 +11,8 @@
 <Service>
 	<ConnectionTimeout>5000</ConnectionTimeout>
 	<ServerNodes>
-		<ServerNode>172.16.73.141:9090;172.16.73.141:9091</ServerNode>
-		<ServerNode>172.16.73.141:9091;172.16.73.141:9090</ServerNode>
+		<ServerNode>127.0.0.1:9091</ServerNode>
+		<ServerNode>127.0.0.1:9091</ServerNode>
 	</ServerNodes>
 </Service>
 

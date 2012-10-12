@@ -31,7 +31,7 @@ public class SessionChannelHandler extends SimpleChannelUpstreamHandler{
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception {
-		logger.info(e.toString());
+		logger.error(e, e.getCause());
 	}
 	
 	@Override

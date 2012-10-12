@@ -7,7 +7,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.apache.log4j.Logger;
+
 public class Message {
+	private final static Logger logger=Logger.getLogger(MessageBytesFrameDecoder.class);
+	
+	
 	private String commandFlag;
 	private String sessionContainerId;
 	private String attributeKey;
@@ -54,7 +59,7 @@ public class Message {
 			throw e;
 		}
 	}
-	private static final int endTag = 0;
+	private static final int endTag = -1;
 	public byte[] toByteArray() throws MessageException{
 		try {
 			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -81,6 +86,11 @@ public class Message {
 	//----------------生成字节码若干方法:start-------------------
 	//----------------由字节码生成对象若干方法:start-----------------
 	public void mergeFrom(byte[] bytes) throws MessageException{
+		System.out.println(bytes[0]);
+		System.out.println(bytes[1]);
+		System.out.println(bytes[2]);
+		System.out.println(bytes[4]);
+		
 		DataInputStream dataIn = new DataInputStream(new ByteArrayInputStream(bytes));
 		try {
 			while(true){
@@ -96,6 +106,7 @@ public class Message {
 	}
 	private void readFiled(int tag,byte[] value) throws IOException{
 		if(value==null||value.length==0) return;
+		logger.debug("tag:"+tag);
 		switch(tag){
 			case 1:this.commandFlag = CodecHelpler.convertBytes2Str(value);break;
 			case 2:this.sessionContainerId = CodecHelpler.convertBytes2Str(value);break;
