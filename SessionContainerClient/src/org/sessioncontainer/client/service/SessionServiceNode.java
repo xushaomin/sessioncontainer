@@ -88,6 +88,11 @@ public class SessionServiceNode{
 	//--接受消息并唤醒command
 	public void reciveMsg(Message msg){
 		Command command = commandHolder.getCommand(msg.getSessionContainerId(),msg.getCommandId());
+		try {
+			command.reciveMessage(msg);
+		} catch (SessionContainerException e) {
+			logger.error("唤醒命令时发生错误",e);
+		}
 		command.signal();
 	}
 	public void shutdown(){

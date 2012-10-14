@@ -10,6 +10,6 @@ session.setAttribute("testval","test");
 <title>Insert title here</title>
 </head>
 <body>
- <%-- <%=session.getAttribute("testval")%> --%>
+<%=session.getAttribute("testval")%>
 </body>
 </html>

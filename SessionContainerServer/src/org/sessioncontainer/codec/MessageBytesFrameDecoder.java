@@ -1,6 +1,7 @@
 package org.sessioncontainer.codec;
 
 
+import org.apache.log4j.Logger;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
@@ -11,7 +12,7 @@ import org.jboss.netty.handler.codec.frame.FrameDecoder;
  * 
  */
 public class MessageBytesFrameDecoder extends FrameDecoder {
-	
+	private final static Logger logger=Logger.getLogger(MessageBytesFrameDecoder.class);
 	public MessageBytesFrameDecoder(){
 		super();
 	}
@@ -33,11 +34,13 @@ public class MessageBytesFrameDecoder extends FrameDecoder {
             throw new CorruptedFrameException("negative length: " + length);
         }
 		if (buffer.readableBytes() < length) {
+			logger.debug("MessageBytesFrameDecoder[server]--数据未接受完全！");
             buffer.resetReaderIndex();
             return null;
         } else {
+        	logger.debug("MessageBytesFrameDecoder[server]--接收到消息，长度["+length+"]");
         	byte[] bytes = new byte[length];
-            buffer.getBytes(lengthByteBuf.length, bytes);
+            buffer.readBytes(bytes);
             return bytes;
         }
 	}

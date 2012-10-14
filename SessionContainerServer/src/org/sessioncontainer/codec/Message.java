@@ -81,11 +81,6 @@ public class Message {
 	//----------------生成字节码若干方法:start-------------------
 	//----------------由字节码生成对象若干方法:start-----------------
 	public void mergeFrom(byte[] bytes) throws MessageException{
-		System.out.println(bytes[0]);
-		System.out.println(bytes[1]);
-		System.out.println(bytes[2]);
-		System.out.println(bytes[4]);
-		
 		DataInputStream dataIn = new DataInputStream(new ByteArrayInputStream(bytes));
 		try {
 			while(true){
@@ -102,11 +97,11 @@ public class Message {
 	private void readFiled(int tag,byte[] value) throws IOException{
 		if(value==null||value.length==0) return;
 		switch(tag){
-			case 1:this.commandFlag = CodecHelpler.convertBytes2Str(value);System.out.println("111111111111");break;
-			case 2:this.sessionContainerId = CodecHelpler.convertBytes2Str(value);System.out.println("2222222222222");break;
-			case 3:this.attributeKey = CodecHelpler.convertBytes2Str(value);System.out.println("33333333333");break;
-			case 4:this.commandId = CodecHelpler.convertBytes2Str(value);System.out.println("444444444444");break;
-			case 5:this.value = value;System.out.println("555555555555555");break;
+			case 1:this.commandFlag = CodecHelpler.convertBytes2Str(value);break;
+			case 2:this.sessionContainerId = CodecHelpler.convertBytes2Str(value);break;
+			case 3:this.attributeKey = CodecHelpler.convertBytes2Str(value);break;
+			case 4:this.commandId = CodecHelpler.convertBytes2Str(value);break;
+			case 5:this.value = value;break;
 			default:;//do Nothing
 		}
 	}

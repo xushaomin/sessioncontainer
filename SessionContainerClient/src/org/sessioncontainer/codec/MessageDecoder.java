@@ -14,13 +14,13 @@ public class MessageDecoder extends OneToOneDecoder {
 	
 	@Override
 	protected Object decode(ChannelHandlerContext ctx, Channel channel, Object msg) throws Exception {
-		logger.debug("MessageDecoder");
 		if (!(msg instanceof byte[])) {
             return msg;
         }
 		Message message = new Message();
 		message.mergeFrom((byte[]) msg);
-		return message;
+		logger.debug("MessageDecoder[server]--message["+message+"]！");
+        return message;
 	}
 
 }

@@ -7,7 +7,6 @@ import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.frame.CorruptedFrameException;
 import org.jboss.netty.handler.codec.frame.FrameDecoder;
-import org.sessioncontainer.client.componet.HttpSessionFilter;
 
 /*格式化字传输的节流
  * 
@@ -20,8 +19,6 @@ public class MessageBytesFrameDecoder extends FrameDecoder {
 	
 	@Override
 	protected Object decode(ChannelHandlerContext ctx, Channel channel, ChannelBuffer buffer) throws Exception {
-		logger.debug("MessageBytesFrameDecoder");
-		
 		buffer.markReaderIndex();//标记已经读取的偏移量
 		final byte[] lengthByteBuf = new byte[4];//字节长度用一个整形表示，需要4个字节来存储
 		for(int i=0,n=lengthByteBuf.length;i<n;i++){//读取4个字节先
@@ -37,11 +34,13 @@ public class MessageBytesFrameDecoder extends FrameDecoder {
             throw new CorruptedFrameException("negative length: " + length);
         }
 		if (buffer.readableBytes() < length) {
+			logger.debug("MessageBytesFrameDecoder[client]--数据未接受完全！");
             buffer.resetReaderIndex();
             return null;
         } else {
+        	logger.debug("MessageBytesFrameDecoder[client]--接收到消息，长度["+length+"]");
         	byte[] bytes = new byte[length];
-            buffer.getBytes(lengthByteBuf.length, bytes);
+            buffer.readBytes(bytes);
             return bytes;
         }
 	}

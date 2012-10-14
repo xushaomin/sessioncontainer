@@ -8,12 +8,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.sessioncontainer.client.command.CommandDef;
+import org.sessioncontainer.client.service.SessionService;
 import org.sessioncontainer.codec.CodecHelpler;
 import org.sessioncontainer.codec.Message;
 import org.sessioncontainer.codec.MessageException;
 
 public class TestMain {
-	public static void main(String[] args) throws MessageException, IOException{
+	public static void main(String[] args) throws MessageException, IOException, InterruptedException{
 		/*int i=0xf8f;
 		
 		System.out.println(Integer.toBinaryString(i));
@@ -34,13 +35,23 @@ public class TestMain {
 		}*/
 		/*System.out.println(java.lang.Integer.toHexString(1080));
 		*/
+		testSaveService();
+		Thread.sleep(1000);
 		//testCodecEncode();
-		testCodecDecode();
+		//testCodecDecode();
 		/*System.out.println(java.util.UUID.randomUUID().toString().toUpperCase().length());
 		System.out.println(java.util.UUID.randomUUID().toString().toUpperCase().length());
 		System.out.println(java.util.UUID.randomUUID().toString().toUpperCase().length());
 		System.out.println(java.util.UUID.randomUUID().toString().toUpperCase().length());*/
 	}
+	
+	private static void testSaveService(){
+		SessionService sessionService = SessionService.getInstance();
+		sessionService.setAttribute(java.util.UUID.randomUUID().toString().toUpperCase(), "testval", "test");
+		//sessionService.getAttribute(sessionContainerId, attributeKey)
+	}
+	
+	
 	private static void testCodecDecode(){
 		Message msg = new Message();
 		FileInputStream fout = null;
