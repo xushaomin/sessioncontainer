@@ -1,0 +1,1 @@
+SessionContainer是纯java编写的用于java web集群的软件，分为服务器端(SessionContainerServer)和客户端(SessionContainerClient),用于保存session中的各个属性.SessionContainerClient则负责与服务器端的数据交互.使用Netty作为通信框架，性能优秀应用程序操作Session同传统方式一样.web服务器对Session的set,get操作只针对其属性数据，而不是整个Session的数据，减少了数据传输量，提高性能。
